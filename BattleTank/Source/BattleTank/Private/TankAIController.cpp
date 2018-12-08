@@ -7,8 +7,15 @@
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
-	auto AITank = GetAITank();
+}
+
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
 	auto PlayerTank = GetPlayerTank();
+	auto AITank = GetAITank();
+
 	if (!PlayerTank)
 	{
 		UE_LOG(LogTemp, Error, TEXT("AI %s cannot find Player"), *AITank->GetName())
@@ -16,7 +23,11 @@ void ATankAIController::BeginPlay()
 
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("AI Tank %s sees Player %s"), *AITank->GetName(), *PlayerTank->GetName())
+		// TODO move towards player
+
+		AITank->AimAt(PlayerTank->GetActorLocation());
+	
+		// TODO fire if ready
 	}
 }
 

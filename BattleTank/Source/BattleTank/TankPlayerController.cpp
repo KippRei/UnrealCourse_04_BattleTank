@@ -2,6 +2,7 @@
 
 #include "TankPlayerController.h"
 #include "CollisionQueryParams.h"
+#include "DrawDebugHelpers.h"
 #include "Engine/World.h"
 #include "BattleTank.h"
 
@@ -30,8 +31,8 @@ void ATankPlayerController::AimTowardsCrossHair()
 	
 	if (GetSightRayHitLocation(HitLocation)) // Has "side-effect", is going to line trace
 	{
-		UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString());
-		// TODO Tell controlled tank to aim at this point
+		// UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString());
+		GetControlledTank()->AimAt(HitLocation);
 	}
 	
 }
@@ -68,23 +69,20 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& 
 bool ATankPlayerController::GetLookVectorHitLocation(FVector& LookDirection, FVector& OutHitLocation) const
 {
 	FHitResult OutHit;
-	const FCollisionQueryParams Params ("", false, this);
-	const FCollisionResponseParams ResponseParam;
+	auto StartLocation = PlayerCameraManager->GetCameraLocation();
+	auto EndLocation = StartLocation + (LookDirection * LineTraceRange);
 
-	if (GetWorld()->LineTraceSingleByChannel
-	(
+	if (GetWorld()->LineTraceSingleByChannel(
 		OutHit,
-		GetControlledTank()->GetActorLocation(),
-		LookDirection * LineTraceRange,
-		ECC_Visibility,
-		Params,
-		ResponseParam
+		StartLocation,
+		EndLocation,
+		ECollisionChannel::ECC_Visibility
 	))
 	{
-		// UE_LOG(LogTemp, Warning, TEXT("Actor Hit: %s"), *OutHit.GetActor()->GetName())
 		OutHitLocation = OutHit.Location;
 		return true;
 	}
 
+	OutHitLocation = FVector(0);
 	return false;
 }

@@ -38,5 +38,8 @@ private:
 	float CrossHairYLocation = .33333;
 
 	UPROPERTY(EditAnywhere)
-	float LineTraceRange = 10000;
+	float LineTraceRange = 1000000;
+
+	UPROPERTY(EditAnywhere)
+		FVector TankBarrelLevel {0.f, 0.f, 100.f};
 };
