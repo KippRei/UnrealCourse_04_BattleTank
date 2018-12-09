@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Components/StaticMeshComponent.h"
+#include "Classes/Kismet/GameplayStatics.h"
 #include "TankAimingComponent.generated.h"
 
 
@@ -15,7 +17,15 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UTankAimingComponent();
-	void AimingAt(FVector& HitLocation) const;
+
+	void AimingAt(FVector& HitLocation, float& LaunchSpeed);
+
+	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+
+	void SetTurretReference(UStaticMeshComponent* TurretToSet);
+
+	void MoveBarrelTowards(FVector& AimDirection);
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -26,5 +36,11 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+private:
+	// pointer for Barrel Static Mesh
+	UStaticMeshComponent* Barrel = nullptr;
+
+	// pointer for Turret Static Mesh
+	UStaticMeshComponent* Turret = nullptr;
 		
 };
