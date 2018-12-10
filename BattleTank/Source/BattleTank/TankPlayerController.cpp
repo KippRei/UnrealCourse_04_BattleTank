@@ -2,6 +2,7 @@
 
 #include "TankPlayerController.h"
 #include "CollisionQueryParams.h"
+#include "Tank.h"
 #include "DrawDebugHelpers.h"
 #include "Engine/World.h"
 #include "BattleTank.h"
@@ -83,6 +84,8 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector& LookDirection, FVe
 		return true;
 	}
 
+	auto Time = GetWorld()->GetTimeSeconds();
+	UE_LOG(LogTemp, Warning, TEXT("%f: No aim solution found..."), Time)
 	OutHitLocation = FVector(0);
 	return false;
 }

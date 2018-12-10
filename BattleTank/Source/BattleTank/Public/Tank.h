@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-#include "TankAimingComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Tank.generated.h"
 
 class UTankBarrel;
+class UTankAimingComponent;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -24,7 +24,7 @@ public:
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
-		void SetTurretReference(UStaticMeshComponent * TurretToSet);
+		void SetTurretReference(UTankTurret * TurretToSet);
 
 
 protected:
