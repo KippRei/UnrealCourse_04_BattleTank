@@ -2,6 +2,8 @@
 
 #include "Tank.h"
 #include "TankAimingComponent.h"
+#include "TankBarrel.h"
+#include "Projectile.h"
 #include "../Public/Tank.h"
 
 // Sets default values
@@ -17,14 +19,30 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	Barrel = GetBarrel();
+}
+
+void ATank::Fire()
+{
+	UE_LOG(LogTemp, Warning, TEXT("FIRE!"));
+	// FActorSpawnParameters SpawnInfo;
+	// SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	if (!Barrel) { return; }
+
+	// Spawn a projectile at the socket location on the barrel
+	UE_LOG(LogTemp, Warning, TEXT("%s, %s"), *Barrel->GetSocketLocation("Projectile").ToString(), *Barrel->GetSocketRotation("Projectile").ToString());
+	GetWorld()->SpawnActor<AProjectile>(Barrel->GetSocketLocation("Projectile"), Barrel->GetSocketRotation("Projectile")); //, SpawnInfo);
 }
 
 // Called to bind functionality to input
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
 
+UTankBarrel * ATank::GetBarrel() const
+{
+	return TankAimingComponent->GetBarrel();
 }
 
 void ATank::AimAt(FVector HitLocation)
@@ -38,6 +56,7 @@ void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
 }
 
+// Set in Blueprint Editor
 void ATank::SetTurretReference(UTankTurret * TurretToSet)
 {
 	TankAimingComponent->SetTurretReference(TurretToSet);

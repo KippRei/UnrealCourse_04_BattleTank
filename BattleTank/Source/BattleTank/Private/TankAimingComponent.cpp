@@ -55,8 +55,6 @@ void UTankAimingComponent::AimingAt(FVector& HitLocation, float& LaunchSpeed)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
-		auto Time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found at %s"), Time, *HitLocation.ToString())
 	}
 
 	else
@@ -65,13 +63,20 @@ void UTankAimingComponent::AimingAt(FVector& HitLocation, float& LaunchSpeed)
 	}
 }
 
+UTankBarrel* UTankAimingComponent::GetBarrel()const
+{
+	return Barrel;
+}
+
 void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
+	if (!BarrelToSet) { return; }
 	Barrel = BarrelToSet;
 }
 
 void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
 {
+	if (!TurretToSet) { return; }
 	Turret = TurretToSet;
 }
 

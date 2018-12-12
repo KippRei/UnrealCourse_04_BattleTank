@@ -24,6 +24,8 @@ public:
 
 	void AimingAt(FVector& HitLocation, float& LaunchSpeed);
 
+	UTankBarrel* GetBarrel() const;
+
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
 	void SetTurretReference(UTankTurret* TurretToSet);
