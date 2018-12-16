@@ -11,7 +11,6 @@ ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
 }
 
@@ -19,30 +18,33 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
-	Barrel = GetBarrel();
 }
 
 void ATank::Fire()
 {
 	UE_LOG(LogTemp, Warning, TEXT("FIRE!"));
-	// FActorSpawnParameters SpawnInfo;
-	// SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	if (!Barrel) { return; }
+	
+	if (!Barrel) 
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Nope!"));
+		return;
+	}
 
 	// Spawn a projectile at the socket location on the barrel
-	UE_LOG(LogTemp, Warning, TEXT("%s, %s"), *Barrel->GetSocketLocation("Projectile").ToString(), *Barrel->GetSocketRotation("Projectile").ToString());
-	GetWorld()->SpawnActor<AProjectile>(Barrel->GetSocketLocation("Projectile"), Barrel->GetSocketRotation("Projectile")); //, SpawnInfo);
+	auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+		ProjectileBlueprint,
+		Barrel->GetSocketLocation(FName("Projectile")),
+		Barrel->GetSocketRotation(FName("Projectile"))
+	);
+
+	Projectile->LaunchProjectile(LaunchSpeed);
+
 }
 
 // Called to bind functionality to input
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-}
-
-UTankBarrel * ATank::GetBarrel() const
-{
-	return TankAimingComponent->GetBarrel();
 }
 
 void ATank::AimAt(FVector HitLocation)
@@ -54,6 +56,7 @@ void ATank::AimAt(FVector HitLocation)
 void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
+	Barrel = BarrelToSet;
 }
 
 // Set in Blueprint Editor

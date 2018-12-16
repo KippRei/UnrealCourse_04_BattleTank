@@ -49,8 +49,6 @@ private:
 	TSubclassOf<AProjectile>ProjectileBlueprint;
 	// Alternate (Not Good) Way: UClass* ProjectileBlueprint;
 
-	UTankBarrel* GetBarrel()const;
-
 	// Local barrel reference for spawning projectile
 	UTankBarrel* Barrel = nullptr;
 };

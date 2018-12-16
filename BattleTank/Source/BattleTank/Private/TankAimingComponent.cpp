@@ -63,7 +63,7 @@ void UTankAimingComponent::AimingAt(FVector& HitLocation, float& LaunchSpeed)
 	}
 }
 
-UTankBarrel* UTankAimingComponent::GetBarrel()const
+UTankBarrel* UTankAimingComponent::GetBarrel()
 {
 	return Barrel;
 }
