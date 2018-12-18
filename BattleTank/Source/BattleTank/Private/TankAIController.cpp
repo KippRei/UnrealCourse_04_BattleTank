@@ -13,31 +13,17 @@ void ATankAIController::BeginPlay()
 void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	auto AITank = Cast<ATank>(GetPawn());
 
-	auto PlayerTank = GetPlayerTank();
-	auto AITank = GetAITank();
-
-	if (!PlayerTank)
+	if (PlayerTank)
 	{
-		UE_LOG(LogTemp, Error, TEXT("AI %s cannot find Player"), *AITank->GetName())
-	}
-
-	else
-	{
-		// TODO move towards player
+		// Move towards player
+		MoveToActor(PlayerTank, AcceptanceRadius); // TODO Check radius is in cm
 
 		AITank->AimAt(PlayerTank->GetActorLocation());
 	
 		// TODO fire if ready
+		// AITank->Fire();
 	}
-}
-
-ATank* ATankAIController::GetAITank() const
-{
-	return Cast<ATank>(GetPawn());
-}
-
-ATank* ATankAIController::GetPlayerTank() const
-{
-	return Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 }

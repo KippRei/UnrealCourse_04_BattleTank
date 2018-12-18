@@ -83,8 +83,6 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector& LookDirection, FVe
 		return true;
 	}
 
-	auto Time = GetWorld()->GetTimeSeconds();
-	UE_LOG(LogTemp, Warning, TEXT("%f: No aim solution found..."), Time)
 	OutHitLocation = FVector(0);
 	return false;
 }

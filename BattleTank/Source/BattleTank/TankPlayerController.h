@@ -29,15 +29,15 @@ private:
 
 	bool GetLookVectorHitLocation(FVector&, FVector&) const;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float CrossHairXLocation = .5;
 	
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float CrossHairYLocation = .33333;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000;
 
-	UPROPERTY(EditAnywhere)
-		FVector TankBarrelLevel {0.f, 0.f, 100.f};
+	UPROPERTY(EditDefaultsOnly)
+	FVector TankBarrelLevel {0.f, 0.f, 100.f};
 };
