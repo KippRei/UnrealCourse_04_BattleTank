@@ -8,6 +8,15 @@
 #include "Classes/Kismet/GameplayStatics.h"
 #include "TankAimingComponent.generated.h"
 
+// Enum for firing state
+UENUM()
+enum class EFiringState : uint8
+{
+	Reloading,
+	Aiming,
+	Locked
+};
+
 // Forward Declaration
 class UTankBarrel;
 class UTankTurret;
@@ -19,6 +28,9 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:	
+	// Called every frame
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
@@ -26,9 +38,14 @@ public:
 
 	UTankBarrel* GetBarrel();
 
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void InitializeComponent(UTankBarrel* BarrelToSet,UTankTurret* TurretToSet);
+
+	/*UFUNCTION(BlueprintCallable, Category = "Input")
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
-	void SetTurretReference(UTankTurret* TurretToSet);
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void SetTurretReference(UTankTurret* TurretToSet);*/
 
 	void MoveBarrelTowards(FVector& AimDirection);
 
@@ -36,11 +53,8 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	
-
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	UPROPERTY(BlueprintReadOnly, Category = "State")
+	EFiringState FiringState = EFiringState::Reloading;
 
 private:
 	// pointer for Barrel Static Mesh
@@ -48,5 +62,4 @@ private:
 
 	// pointer for Turret Static Mesh
 	UTankTurret* Turret = nullptr;
-		
 };
