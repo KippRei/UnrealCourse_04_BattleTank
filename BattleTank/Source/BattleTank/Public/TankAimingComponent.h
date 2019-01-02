@@ -39,7 +39,7 @@ public:
 	UTankBarrel* GetBarrel();
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void InitializeComponent(UTankBarrel* BarrelToSet,UTankTurret* TurretToSet);
+	void InitializeComponent(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
 	/*UFUNCTION(BlueprintCallable, Category = "Input")
 	void SetBarrelReference(UTankBarrel* BarrelToSet);

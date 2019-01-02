@@ -7,6 +7,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Tank.generated.h"
 
+// Forward declarations
 class UTankBarrel;
 class UTankTurret;
 class UTankAimingComponent;
@@ -34,9 +35,6 @@ public:
 
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
 	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
