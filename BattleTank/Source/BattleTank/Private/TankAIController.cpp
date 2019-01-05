@@ -22,9 +22,9 @@ void ATankAIController::Tick(float DeltaTime)
 	MoveToActor(PlayerTank, AcceptanceRadius); // radius is in cm
 
 	auto PlayerLocation = PlayerTank->GetActorLocation();
-	AITank->FindComponentByClass<UTankAimingComponent>()->AimingAt(PlayerLocation);
+	auto AIAimingComponent = AITank->FindComponentByClass<UTankAimingComponent>();
+	AIAimingComponent->AimingAt(PlayerLocation);
 	
 	// TODO Fix firing
-	// AITank->Fire();
-
+	AIAimingComponent->Fire();
 }

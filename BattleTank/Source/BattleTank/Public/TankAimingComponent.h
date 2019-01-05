@@ -20,6 +20,7 @@ enum class EFiringState : uint8
 // Forward Declaration
 class UTankBarrel;
 class UTankTurret;
+class AProjectile;
 
 // Holds barrel's properties and elevate method
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -32,22 +33,13 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	
 	// Sets default values for this component's properties
-	UTankAimingComponent();
-
+	UTankAimingComponent(); 
+	
 	void AimingAt(FVector& HitLocation);
 
-	UTankBarrel* GetBarrel();
+	UFUNCTION(BlueprintCallable)
+	void Fire();
 
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void InitializeComponent(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
-
-	/*UFUNCTION(BlueprintCallable, Category = "Input")
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-
-	UFUNCTION(BlueprintCallable, Category = "Input")
-	void SetTurretReference(UTankTurret* TurretToSet);*/
-
-	void MoveBarrelTowards(FVector& AimDirection);
 
 protected:
 	// Called when the game starts
@@ -56,7 +48,13 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Aiming;
 
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void InitializeComponent(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
+
 private:
+
+	void MoveBarrelTowards(FVector& AimDirection);
+
 	// pointer for Barrel Static Mesh
 	UTankBarrel* Barrel = nullptr;
 
@@ -65,4 +63,13 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float LaunchSpeed = 4000;
+
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	TSubclassOf<AProjectile>ProjectileBlueprint;
+	// Alternate (Not Good) Way: UClass* ProjectileBlueprint;
+
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	float ReloadTimeInSeconds = 3;
+
+	double LastFireTime = 0;
 };
