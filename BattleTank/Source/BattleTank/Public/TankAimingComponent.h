@@ -34,7 +34,7 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
-	void AimingAt(FVector& HitLocation, float& LaunchSpeed);
+	void AimingAt(FVector& HitLocation);
 
 	UTankBarrel* GetBarrel();
 
@@ -62,4 +62,7 @@ private:
 
 	// pointer for Turret Static Mesh
 	UTankTurret* Turret = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float LaunchSpeed = 4000;
 };

@@ -10,7 +10,6 @@
 // Forward declarations
 class UTankBarrel;
 class UTankTurret;
-class UTankAimingComponent;
 class AProjectile;
 
 UCLASS()
@@ -34,9 +33,7 @@ public:
 
 
 protected:
-	UPROPERTY(BlueprintReadOnly)
-	UTankAimingComponent* TankAimingComponent = nullptr;
-
+	
 	virtual void BeginPlay() override;
 
 public:

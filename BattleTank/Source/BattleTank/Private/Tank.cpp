@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Tank.h"
-#include "TankAimingComponent.h"
 #include "TankBarrel.h"
 #include "Projectile.h"
 #include "../Public/Tank.h"
@@ -16,7 +15,6 @@ ATank::ATank()
 void ATank::BeginPlay() // Blueprint BeginPlay will be called when Super is called
 {
 	Super::BeginPlay(); // Needed for Blueprint BeginPlay to run!!!!!
-	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 // Called to bind functionality to input
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -26,7 +24,6 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ATank::InitializeComponent(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet)
 {
-	TankAimingComponent->InitializeComponent(BarrelToSet, TurretToSet);
 	Barrel = BarrelToSet;
 }
 //// Set in Blueprint Editor
@@ -41,12 +38,6 @@ void ATank::InitializeComponent(UTankBarrel * BarrelToSet, UTankTurret * TurretT
 //{
 //	TankAimingComponent->SetTurretReference(TurretToSet);
 //}
-
-void ATank::AimAt(FVector HitLocation)
-{
-	if (!ensure(TankAimingComponent)) { return; }
-	TankAimingComponent->AimingAt(HitLocation, LaunchSpeed);
-}
 
 void ATank::Fire()
 {

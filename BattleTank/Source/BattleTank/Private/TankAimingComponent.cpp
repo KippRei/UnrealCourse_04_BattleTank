@@ -50,7 +50,7 @@ void UTankAimingComponent::InitializeComponent(UTankBarrel * BarrelToSet, UTankT
 //	Turret = TurretToSet;
 //}
 
-void UTankAimingComponent::AimingAt(FVector& HitLocation, float& LaunchSpeed)
+void UTankAimingComponent::AimingAt(FVector& HitLocation)
 {
 	if (!ensure(Barrel)) { return; }
 
@@ -97,4 +97,3 @@ void UTankAimingComponent::MoveBarrelTowards(FVector& AimDirection)
 	Barrel->Elevate(DeltaRotator.Pitch);
 	Turret->RotateTurret(DeltaRotator.Yaw);
 }
-
