@@ -1,1 +1,10 @@
 BattleTank/Content/
+BattleTank/Intermediate/
+BattleTank/Saved/
+*.dll
+*.pdb
+*.ipch
+BattleTank/.vs/BattleTank/v15/.suo
+*.db
+BattleTank/Binaries/
+*.log

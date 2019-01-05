@@ -2,7 +2,6 @@
 
 #include "Tank.h"
 #include "TankAimingComponent.h"
-#include "TankMovementComponent.h"
 #include "TankBarrel.h"
 #include "Projectile.h"
 #include "../Public/Tank.h"
@@ -14,6 +13,11 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
+void ATank::BeginPlay() // Blueprint BeginPlay will be called when Super is called
+{
+	Super::BeginPlay(); // Needed for Blueprint BeginPlay to run!!!!!
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
+}
 // Called to bind functionality to input
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -40,7 +44,7 @@ void ATank::InitializeComponent(UTankBarrel * BarrelToSet, UTankTurret * TurretT
 
 void ATank::AimAt(FVector HitLocation)
 {
-	if (!TankAimingComponent) { return; }
+	if (!ensure(TankAimingComponent)) { return; }
 	TankAimingComponent->AimingAt(HitLocation, LaunchSpeed);
 }
 

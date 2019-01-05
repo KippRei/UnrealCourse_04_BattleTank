@@ -3,6 +3,7 @@
 #include "TankPlayerController.h"
 #include "CollisionQueryParams.h"
 #include "Tank.h"
+#include "TankAimingComponent.h"
 #include "DrawDebugHelpers.h"
 #include "Engine/World.h"
 #include "BattleTank.h"
@@ -10,7 +11,15 @@
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	GetControlledTank();
+	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	if (AimingComponent)
+	{
+		FoundAimingComponent(AimingComponent);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Player controller can't find aiming component at BeginPlay"));
+	}
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -26,7 +35,7 @@ ATank* ATankPlayerController::GetControlledTank() const
 
 void ATankPlayerController::AimTowardsCrossHair()
 {
-	if (!GetControlledTank()) { return; }
+	if (!ensure(GetControlledTank())) { return; }
 
 	FVector HitLocation; // Out parameter
 	
