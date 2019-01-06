@@ -29,15 +29,9 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	
-	// Sets default values for this component's properties
-	UTankAimingComponent(); 
-	
 	void AimingAt(FVector& HitLocation);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
 
 
@@ -52,9 +46,15 @@ protected:
 	void InitializeComponent(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
 private:
+	// Called every frame
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	// Sets default values for this component's properties
+	UTankAimingComponent();
 
 	void MoveBarrelTowards(FVector& AimDirection);
-
+	
+	bool IsBarrelMoving();
 	// pointer for Barrel Static Mesh
 	UTankBarrel* Barrel = nullptr;
 
@@ -72,4 +72,6 @@ private:
 	float ReloadTimeInSeconds = 3;
 
 	double LastFireTime = 0;
+
+	FVector AimDirection;
 };
