@@ -25,6 +25,8 @@ void ATankAIController::Tick(float DeltaTime)
 	auto AIAimingComponent = AITank->FindComponentByClass<UTankAimingComponent>();
 	AIAimingComponent->AimingAt(PlayerLocation);
 	
-	// TODO Fix firing
-	AIAimingComponent->Fire();
+	if (AIAimingComponent->GetFiringState() == EFiringState::Locked)
+	{
+		AIAimingComponent->Fire();
+	}
 }

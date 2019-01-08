@@ -45,6 +45,11 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	}
 }
 
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+	return FiringState;
+}
+
 void UTankAimingComponent::InitializeComponent(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet)
 {
 	Barrel = BarrelToSet;
@@ -91,6 +96,12 @@ void UTankAimingComponent::MoveBarrelTowards(FVector& AimDirection)
 	auto DeltaRotator = AimAsARotator - BarrelRotator;
 
 	Barrel->Elevate(DeltaRotator.Pitch);
+
+	if (FMath::Abs(DeltaRotator.Yaw) > 180)
+	{
+		DeltaRotator.Yaw = -DeltaRotator.Yaw;
+	}
+
 	Turret->RotateTurret(DeltaRotator.Yaw);
 }
 

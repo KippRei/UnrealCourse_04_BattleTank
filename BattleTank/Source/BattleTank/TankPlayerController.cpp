@@ -32,8 +32,8 @@ void ATankPlayerController::AimTowardsCrossHair()
 	if (!GetPawn()) { return; }
 
 	FVector HitLocation; // Out parameter
-	
-	if (GetSightRayHitLocation(HitLocation)) // Has "side-effect", is going to line trace
+	bool bGotHitLocation = GetSightRayHitLocation(HitLocation);
+	if (bGotHitLocation) // Has "side-effect", is going to line trace
 	{
 		AimingComponent->AimingAt(HitLocation);
 	}

@@ -17,7 +17,7 @@ enum class EFiringState : uint8
 	Locked
 };
 
-// Forward Declaration
+// Forward Declarations
 class UTankBarrel;
 class UTankTurret;
 class AProjectile;
@@ -34,6 +34,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
 
+	EFiringState GetFiringState() const;
 
 protected:
 	// Called when the game starts
