@@ -1,4 +1,4 @@
-BattleTank/Content/
+
 BattleTank/Intermediate/
 BattleTank/Saved/
 *.dll
@@ -8,3 +8,5 @@ BattleTank/.vs/BattleTank/v15/.suo
 *.db
 BattleTank/Binaries/
 *.log
+BattleTank/Content/autumnbs/
+BattleTank/Content/PN_OpenWorldFoliage/

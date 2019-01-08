@@ -14,7 +14,8 @@ enum class EFiringState : uint8
 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	NoAmmo
 };
 
 // Forward Declarations
@@ -36,6 +37,9 @@ public:
 
 	EFiringState GetFiringState() const;
 
+	UFUNCTION(BlueprintCallable, Category = "Ammo")
+	int GetAmmoCount() const;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -45,6 +49,9 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void InitializeComponent(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
+
+	UPROPERTY(EditDefaultsOnly, Category = "Ammo")
+	int AmmoCount = 3;
 
 private:
 	// Called every frame
