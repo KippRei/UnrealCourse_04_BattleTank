@@ -38,7 +38,7 @@ public:
 	EFiringState GetFiringState() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Ammo")
-	int GetAmmoCount() const;
+	int32 GetAmmoCount() const;
 
 protected:
 	// Called when the game starts
@@ -51,7 +51,7 @@ protected:
 	void InitializeComponent(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Ammo")
-	int AmmoCount = 3;
+	int32 AmmoCount = 20;
 
 private:
 	// Called every frame
@@ -70,7 +70,7 @@ private:
 	UTankTurret* Turret = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
-	float LaunchSpeed = 4000;
+	float LaunchSpeed = 8000;
 
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AProjectile>ProjectileBlueprint;
