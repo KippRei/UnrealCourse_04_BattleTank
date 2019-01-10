@@ -49,4 +49,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Timer")
 	float DestroyDelay = 10;
+
+	UPROPERTY(VisibleAnywhere, Category = "Projectile")
+	float ProjectileDamage = 20;
 };

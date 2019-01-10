@@ -5,6 +5,8 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "PhysicsEngine/RadialForceComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "GameFramework/DamageType.h"
 #include "TimerManager.h"
 #include "Delegates/DelegateInstancesImpl.h"
 
@@ -24,6 +26,7 @@ AProjectile::AProjectile()
 
 	LaunchBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Launch Blast"));
 	LaunchBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	
 	ImpactBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Impact Blast"));
 	ImpactBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	ImpactBlast->bAutoActivate = false;
@@ -53,6 +56,15 @@ void AProjectile::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor,
 
 	SetRootComponent(ImpactBlast);
 	CollisionMesh->DestroyComponent();
+
+	UGameplayStatics::ApplyRadialDamage(
+		this,
+		ProjectileDamage,
+		GetActorLocation(),
+		ExplosionForce->Radius, // Radius bound to explosion force for consistency (i.e. bigger explosion force, bigger damage radius)
+		UDamageType::StaticClass(),
+		TArray<AActor*>() // Damage all Actors
+	);
 
 	FTimerHandle Timer;
 	GetWorld()->GetTimerManager().SetTimer<AProjectile>(Timer, this, &AProjectile::OnTimerExpire, DestroyDelay);

@@ -14,3 +14,16 @@ void ATank::BeginPlay() // Blueprint BeginPlay will be called when Super is call
 {
 	Super::BeginPlay(); // Needed for Blueprint BeginPlay to run!!!!!
 }
+
+float ATank::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
+{
+	float DamageToApply = FMath::Clamp<float>(DamageAmount, 0, CurrentHealth);
+	CurrentHealth -= DamageToApply;
+	if (CurrentHealth <= 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("%s is dead!"), *this->GetName());
+		this->Destroy();
+	}
+	UE_LOG(LogTemp, Warning, TEXT("Damage = %f"), DamageToApply);
+	return DamageToApply;
+}

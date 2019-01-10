@@ -7,6 +7,8 @@
 #include "Components/StaticMeshComponent.h"
 #include "Tank.generated.h"
 
+class AProjectile;
+
 UCLASS()
 class BATTLETANK_API ATank : public APawn
 {
@@ -21,6 +23,10 @@ protected:
 	
 	virtual void BeginPlay() override;
 
+	virtual float TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser) override;
+
 private:
 	
+	UPROPERTY(VisibleAnywhere, Category = "Health")
+	int32 CurrentHealth = 32;
 };
