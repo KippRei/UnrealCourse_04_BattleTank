@@ -15,9 +15,16 @@ void ATank::BeginPlay() // Blueprint BeginPlay will be called when Super is call
 	Super::BeginPlay(); // Needed for Blueprint BeginPlay to run!!!!!
 }
 
+
+float ATank::GetHealthPercent() const
+{
+	return (float)CurrentHealth/(float)StartingHealth;
+}
+
 float ATank::TakeDamage(float DamageAmount, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
 {
-	float DamageToApply = FMath::Clamp<float>(DamageAmount, 0, CurrentHealth);
+	int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount);
+	int32 DamageToApply = FMath::Clamp<int32>(DamagePoints, 0, CurrentHealth);
 	CurrentHealth -= DamageToApply;
 	if (CurrentHealth <= 0)
 	{
